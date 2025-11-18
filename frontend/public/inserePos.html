@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insersção de Posição</title>
+    <script src="javascript/inserePos.js"></script>
+    <script src="javascript/constantes.js"></script>
+</head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" height="50"></iframe>
+<h1>Insere Posição</h1>
+<form id="formpos">
+    <table>
+        <tbody>
+            <tr>
+                <td align="right">Nome:</td>
+                <td><input type="text" name="nome_pt" id="nome_pt"></td>
+            </tr>
+            <tr>
+                <td align="right">Nome em inglês:</td>
+                <td><input type="text" name="nome_en" id="nome_en"></td>
+            </tr>
+            <tr>
+                <td align="right">Categoria:</td>
+                <td><input type="text" name="categoria" id="categoria">
+            </tr> 
+            <tr>
+                <td align="right">Dificuldade:</td>
+                <td><input type="text" name="dificuldade" id="dificuldade"></td>
+            </tr>
+            <tr>
+                <td align="right">Descrição</td>
+                <td><input type="text" name="descricao" id="descricao"></td>
+            </tr>
+            <tr>
+                <td align="right">Observações:</td>
+                <td><input type="text" name="observacoes" id="observacoes"></td>
+            </tr>
+        </tbody>
+    </table>
+    <button id="insere" name="insere" value="Insere">Insere</button>
+</form>
+<div id="mensagem"></div>
+</body>
+</html>
