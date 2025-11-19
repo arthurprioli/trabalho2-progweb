@@ -8,13 +8,10 @@ onload = () => {
             const element = elements[i];
             data[element.name] = element.value;
         }
-        const csrftoken = decodeURIComponent('csrftoken');
         fetch(backendAddress + "posicoes/pos/", {
             method: "POST",
             body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken || '',
-            }
+            headers: { 'Content-Type': 'application/json' }
         })
             .then(res => {
             if (res.ok) {

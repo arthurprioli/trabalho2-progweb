@@ -5,8 +5,6 @@
 		<meta http-equiv="X-UA-Compatbile">
 		<meta name="viewport" content="width=device-width">
 		<title>Raiz Posições</title>
-		<script src="javascript/constantes.js"></script>
-		<script src="javascript/script.js"></script>
 	</head>
 	<body>
 		<iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
@@ -16,12 +14,16 @@
 				<thead>
 					<tr style="font-weight: bold;">
 						<td>Nome PT</td><td>Nome EN</td>
-						<td>Categoria</td><td>Dificuldade</td><td>Descrição</td><td>Remove</td>
+						<td>Categoria</td><td>Dificuldade</td><td>Descrição</td><td>Observações</td>
+						<td>Remove</td>
 					</tr>
 				</thead>
 				<tbody id="idtbody"></tbody>
 			</table>
             <input type="button" value="Insere" id="insere" />
+						<input type="button" value="Remove" id="remove" />
 		</form>
+		<script src="javascript/constantes.js"></script>
+		<script src="javascript/script.js"></script>
 	</body>
 </html>

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insersção de Posição</title>
-    <script src="javascript/constantes.js"></script>
-    <script src="javascript/inserePos.js"></script>
+	<meta charset="UTF-8">
+	</meta>
+	<title>Atualiza Posição</title>
+	<script src="javascript/constantes.js"></script>
+	<script src="javascript/update.js"></script>
 </head>
+
 <body>
-    <iframe src="cabecalho.html" frameborder="0" width="100%" height="50"></iframe>
-<h1>Insere Posição</h1>
-<form id="formpos">
-    <table>
+	<iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
+	<h1>Atualizando a Posição #<span id='id'></span></h1>
+	<form id="formpos">
+		<input type="hidden" name="id" id="id">
+			<table>
         <tbody>
             <tr>
                 <td align="right">Nome:</td>
@@ -38,9 +41,10 @@
                 <td><input type="text" name="observacoes" id="observacoes"></td>
             </tr>
         </tbody>
-    </table>
-    <button id="insere" name="insere" value="Insere">Insere</button>
-</form>
-<div id="mensagem"></div>
+    	</table>
+		<button id="atualiza" name="atualiza" value="Atualiza">Atualiza</button>
+	</form>
+	<div id="mensagem"></div>
 </body>
+
 </html>

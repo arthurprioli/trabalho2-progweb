@@ -10,13 +10,21 @@ function exibeListaDePosicoes() {
             let tr = document.createElement('tr');
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td');
-                const key = campos[i];
-                const value = posicao[key];
-                const textContent = value == null ? "" : String(value);
-                let texto = document.createTextNode(textContent);
-                td.appendChild(texto);
+                let href = document.createElement('a');
+                href.setAttribute('href', 'update.html?id=' + posicao['id']);
+                let texto = document.createTextNode(posicao[campos[i]]);
+                href.appendChild(texto);
+                td.appendChild(href);
                 tr.appendChild(td);
             }
+            let checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('name', 'id');
+            checkbox.setAttribute('id', 'id');
+            checkbox.setAttribute('value', posicao['id']);
+            let td = document.createElement('td');
+            td.appendChild(checkbox);
+            tr.appendChild(td);
             tbody.appendChild(tr);
         }
     })
@@ -24,8 +32,33 @@ function exibeListaDePosicoes() {
         console.log("Erro:", error);
     });
 }
+let apagaPosicoes = (evento) => {
+    evento.preventDefault();
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="id"]:checked');
+    const checkedValues = [];
+    checkboxes.forEach((checkbox) => {
+        checkedValues.push(checkbox.value);
+    });
+    fetch(backendAddress + "posicoes/lista/", {
+        method: "DELETE",
+        body: JSON.stringify(checkedValues),
+        headers: { 'Content-Type': 'application/json', }
+    })
+        .then(res => {
+        if (res.ok) {
+            alert("Posições removidas com sucesso!");
+        }
+        else {
+            alert("Erro removendo posições.");
+        }
+    })
+        .catch(err => { console.log(err); })
+        .finally(() => { exibeListaDePosicoes(); });
+};
 onload = function () {
     document.getElementById("insere")
         .addEventListener('click', evento => { location.href = "inserePos.html"; });
+    document.getElementById("remove")
+        .addEventListener('click', apagaPosicoes);
     exibeListaDePosicoes();
 };
