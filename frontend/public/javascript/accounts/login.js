@@ -27,9 +27,9 @@ onload = () => {
             }
         })
             .then((data) => {
-            const token = data.token;
-            localStorage.setItem('token', token);
-            window.location.replace('loginDone.html');
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role);
+            window.location.replace('index.html');
         })
             .catch(erro => { console.log(erro); });
     });

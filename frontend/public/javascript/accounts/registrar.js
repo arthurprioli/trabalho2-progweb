@@ -1,35 +1,41 @@
 "use strict";
-onload = (evento) => {
-    document.getElementById('btnRegister').addEventListener('click', evento => {
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnRegister');
+    if (!btn) {
+        console.error('Botão btnRegister não encontrado!');
+        return;
+    }
+    btn.addEventListener('click', (evento) => {
         evento.preventDefault();
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
-        const password2 = document.getElementById('password2').value;
+        const password_confirm = document.getElementById('password_confirm').value;
         const msg = document.getElementById('msg');
-        if (password != password2) {
-            msg.innerHTML = 'As senhas devem ser iguais.';
+        if (password !== password_confirm) {
+            msg.innerHTML = '<div class="alert alert-danger">As senhas devem ser iguais.</div>';
             return;
         }
-        fetch(backendAddress + 'accounts/registrar/', {
+        fetch(backendAddress + 'accounts/register/', {
             method: 'POST',
-            body: JSON.stringify({
-                'username': username,
-                'email': email,
-                'password': password
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, password_confirm, email })
         })
-            .then((response) => {
+            .then(response => {
             if (response.ok) {
-                window.location.replace('registrarDone.html');
+                return response.json().then(data => {
+                    localStorage.setItem('token', data.token);
+                    window.location.replace('index.html');
+                });
             }
             else {
-                msg.innerHTML = 'Erro ao registrar: ' + response.status + ' ' + response.statusText;
+                return response.json().then(err => {
+                    msg.innerHTML = `<div class="alert alert-danger">${err.detail || 'Erro no cadastro'}</div>`;
+                }).catch(() => {
+                    msg.innerHTML = '<div class="alert alert-danger">Erro de conexão</div>';
+                });
             }
         })
-            .catch(erro => { console.log(erro); });
+            .catch(err => console.error(err));
     });
-};
+});

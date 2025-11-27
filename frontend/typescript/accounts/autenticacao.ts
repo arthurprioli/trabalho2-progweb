@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     fetch(backendAddress + 'accounts/token-auth/', {
         method: 'GET',
         headers: {
-            'Authorization': tokenKeyword + token // Reenvia o token no cabeçalho HTTP
+            'Authorization': tokenKeyword + token
         }
     })
     .then(response => {

@@ -24,11 +24,12 @@ onload = () => {
                     throw new Error('Falha na autenticação');
                 }
             })
-            .then((data: { token: string }) => {
-                const token: string = data.token;
-                localStorage.setItem('token', token);
-                window.location.replace('loginDone.html');
+            .then((data: { token: string, user: { role: string } }) => {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.user.role);
+                window.location.replace('index.html');
             })
+
             .catch(erro => { console.log(erro) })
     });
 };
