@@ -21,7 +21,7 @@
 							<th>Dificuldade</th>
 							<th>Descrição</th>
 							<th>Observações</th>
-							<th>Remove</th>
+							<th id="colunaRemove">Remove</th>
 						</tr>
 					</thead>
 					<tbody id="idtbody"></tbody>
@@ -31,6 +31,7 @@
 			<div id="admin-buttons" class="mt-4" style="display: none;">
 				<button type="button" class="btn btn-primary me-2" id="insere">Insere</button>
 				<button type="button" class="btn btn-danger" id="remove">Remove</button>
+				<button type="button" class="btn btn-primary" id="aprender">Adicionar a aprendidos</button>
 			</div>
 		</div>
 
@@ -39,6 +40,7 @@
 		<script>
     const token = localStorage.getItem('token');
     const adminButtons = document.getElementById('admin-buttons');
+	adminButtons.style.display = "";
 
     if (token) {
         fetch(backendAddress + 'accounts/token-auth/', {
@@ -48,13 +50,7 @@
             if (!res.ok) throw new Error("Token inválido");
             return res.json()
         })
-        .then(data => {
-            console.log("Dados do usuário:", data); // abre o DevTools pra ver
-            if (data.role === 'admin') {
-                adminButtons.style.display = 'block';
-            }
-        })
-        .catch(err => {
+		.catch(err => {
             console.log("Erro ou não é estudante:", err);
             adminButtons.style.display = 'none';
         });

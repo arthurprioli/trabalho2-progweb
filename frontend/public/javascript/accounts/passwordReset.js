@@ -12,8 +12,7 @@ onload = (evento) => {
                 window.location.assign('passwordResetDone.html');
             }
             else {
-                document.getElementById('msg').innerHTML = 'Erro: ' + response.status + ' '
-                    + response.statusText;
+                document.getElementById('msg').innerHTML = 'Erro: ' + response.status + ' ' + response.statusText;
             }
         })
             .catch(erro => { console.log(erro); });
