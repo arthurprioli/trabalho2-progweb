@@ -32,7 +32,10 @@ onload = () => {
         fetch(backendAddress + "posicoes/pos/" + id + "/", {
             method: "PUT",
             body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": 'Token ' + localStorage.getItem('token') // Faltou isso
+            }
         })
             .then(res => {
             if (res.ok) {

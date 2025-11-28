@@ -9,7 +9,7 @@ function exibeListaDePosicoes() {
     }
     fetch(backendAddress + "posicoes/lista/", {
         headers: {
-            'Authorization': 'Token ' + token // ESSA LINHA ERA O QUE FALTAVA!
+            'Authorization': 'Token ' + token
         }
     })
         .then(res => {
@@ -58,7 +58,7 @@ function exibeListaDePosicoes() {
 }
 let apagaPosicoes = (evento) => {
     evento.preventDefault();
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="id"]:checked');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="ids"]:checked');
     const checkedValues = [];
     checkboxes.forEach((checkbox) => {
         checkedValues.push(checkbox.value);
@@ -66,7 +66,9 @@ let apagaPosicoes = (evento) => {
     fetch(backendAddress + "posicoes/lista/", {
         method: "DELETE",
         body: JSON.stringify(checkedValues),
-        headers: { 'Content-Type': 'application/json', }
+        headers: { 'Content-Type': 'application/json',
+            'Authorization': 'Token ' + localStorage.getItem('token')
+        }
     })
         .then(res => {
         if (res.ok) {
@@ -80,46 +82,20 @@ let apagaPosicoes = (evento) => {
         .finally(() => { exibeListaDePosicoes(); });
 };
 onload = function () {
-    const token = localStorage.getItem('token');
-    console.log(token);
-    fetch(backendAddress + 'accounts/logged_info/', {
-        method: 'GET',
-        headers: {
-            'Authorization': tokenKeyword + token,
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => {
-        if (!res.ok) {
-            throw new Error("Falha ao carregar usuário");
-        }
-        return res.json();
-    })
-        .then(userdata => {
-        console.log("minha role é: " + userdata.role);
-        const btnInserir = document.getElementById("insere");
-        const btnRemover = document.getElementById("remove");
-        const btnAprender = document.getElementById("aprender");
-        const colunaRemove = document.getElementById("colunaRemove");
-        btnInserir.style.display = "";
-        btnRemover.style.display = "";
-        btnAprender.style.display = "";
-        // Se for estudante → esconde botões
-        if (userdata.role !== "admin") {
-            console.log("display de usuário");
-            btnInserir.style.display = "none";
-            btnRemover.style.display = "none";
-            if (colunaRemove)
-                colunaRemove.textContent = "aprendeu?";
-        }
-        // eventos só se for admin
-        if (userdata.role == "admin") {
-            console.log("display de admin");
-            btnAprender.style.display = "none";
-            btnInserir.addEventListener('click', () => { location.href = "inserePos.html"; });
-            btnRemover.addEventListener('click', apagaPosicoes);
-        }
-        exibeListaDePosicoes();
-    })
-        .catch(erro => { console.log(erro); });
+    const role = localStorage.getItem("role");
+    const btnInserir = document.getElementById("insere");
+    const btnRemover = document.getElementById("remove");
+    // Se for estudante → esconde botões
+    if (role !== "admin") {
+        btnInserir.style.display = "none";
+        btnRemover.style.display = "none";
+    }
+    // eventos só se for admin
+    if (role === "admin") {
+        btnInserir.addEventListener('click', () => {
+            location.href = "inserePos.html";
+        });
+        btnRemover.addEventListener('click', apagaPosicoes);
+    }
+    exibeListaDePosicoes();
 };

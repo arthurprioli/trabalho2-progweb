@@ -10,7 +10,7 @@ function exibeListaDePosicoes() {
 
     fetch(backendAddress + "posicoes/lista/", {
         headers: {
-            'Authorization': 'Token ' + token   // ESSA LINHA ERA O QUE FALTAVA!
+            'Authorization': 'Token ' + token
         }
     })
     .then(res => {
@@ -64,7 +64,7 @@ function exibeListaDePosicoes() {
 let apagaPosicoes = (evento: Event) => {
 	evento.preventDefault();
 	const checkboxes = document.querySelectorAll<HTMLInputElement>(
-		'input[type="checkbox"][name="id"]:checked');
+    'input[type="checkbox"][name="ids"]:checked');
 	const checkedValues: string[] = [];
 	checkboxes.forEach((checkbox) => {
 		checkedValues.push(checkbox.value);
@@ -73,7 +73,9 @@ let apagaPosicoes = (evento: Event) => {
 	fetch(backendAddress + "posicoes/lista/", {
 		method: "DELETE",
 		body: JSON.stringify(checkedValues),
-		headers: {'Content-Type': 'application/json', }
+		headers: {'Content-Type': 'application/json',
+                   'Authorization': 'Token ' + localStorage.getItem('token')
+         }
 	})
 	.then(res => {
 		if (res.ok)

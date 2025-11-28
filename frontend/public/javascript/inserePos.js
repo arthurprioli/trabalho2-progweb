@@ -11,7 +11,9 @@ onload = () => {
         fetch(backendAddress + "posicoes/pos/", {
             method: "POST",
             body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Token ' + localStorage.getItem('token')
+            }
         })
             .then(res => {
             if (res.ok) {
