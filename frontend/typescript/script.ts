@@ -162,7 +162,7 @@ onload = function () {
 
     const btnInserir = document.getElementById("insere") as HTMLButtonElement;
     const btnRemover = document.getElementById("remove") as HTMLButtonElement;
-    
+
     // Se for estudante → esconde botões
     if (role !== "admin") {
         btnInserir.style.display = "none";
