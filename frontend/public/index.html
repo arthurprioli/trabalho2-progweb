@@ -6,56 +6,68 @@
 		<title>Raiz Posições</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	</head>
-	<body>
+
+	<body class="bg-light">
 		<iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
+
 		<div class="container mt-5">
-			<h1 class="mb-4">Posições</h1>
 
-			<div class="table-responsive">
-				<table class="table table-striped table-hover table-bordered">
-					<thead class="table-dark">
-						<tr>
-							<th>Nome PT</th>
-							<th>Nome EN</th>
-							<th>Categoria</th>
-							<th>Dificuldade</th>
-							<th>Descrição</th>
-							<th>Observações</th>
-							<th id="colunaRemove">Remove</th>
-						</tr>
-					</thead>
-					<tbody id="idtbody"></tbody>
-				</table>
+			<div class="card shadow-sm">
+				<div class="card-body">
+
+					<h1 class="mb-4 text-center">Posições</h1>
+
+					<div class="table-responsive">
+						<table class="table table-striped table-hover align-middle">
+							<thead class="table-dark">
+								<tr>
+									<th>Nome PT</th>
+									<th>Nome EN</th>
+									<th>Categoria</th>
+									<th>Dificuldade</th>
+									<th>Descrição</th>
+									<th>Observações</th>
+									<th id="colunaRemove">Remove</th>
+								</tr>
+							</thead>
+							<tbody id="idtbody"></tbody>
+						</table>
+					</div>
+
+					<div id="admin-buttons" class="mt-4 text-center" style="display: none;">
+						<button type="button" class="btn btn-success me-2 px-4" id="insere">Insere</button>
+						<button type="button" class="btn btn-danger me-2 px-4" id="remove">Remove</button>
+						<button type="button" class="btn btn-primary px-4" id="aprender">Adicionar a aprendidos</button>
+					</div>
+
+				</div>
 			</div>
 
-			<div id="admin-buttons" class="mt-4" style="display: none;">
-				<button type="button" class="btn btn-primary me-2" id="insere">Insere</button>
-				<button type="button" class="btn btn-danger" id="remove">Remove</button>
-				<button type="button" class="btn btn-primary" id="aprender">Adicionar a aprendidos</button>
-			</div>
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="javascript/constantes.js"></script>
-		<script>
-    const token = localStorage.getItem('token');
-    const adminButtons = document.getElementById('admin-buttons');
-	adminButtons.style.display = "";
 
-    if (token) {
-        fetch(backendAddress + 'accounts/token-auth/', {
-            headers: { 'Authorization': 'Token ' + token }
-        })
-        .then(res => {
-            if (!res.ok) throw new Error("Token inválido");
-            return res.json()
-        })
-		.catch(err => {
-            console.log("Erro ou não é estudante:", err);
-            adminButtons.style.display = 'none';
-        });
-    }
-</script>
+		<script>
+			const token = localStorage.getItem('token');
+			const adminButtons = document.getElementById('admin-buttons');
+			adminButtons.style.display = "";
+
+			if (token) {
+				fetch(backendAddress + 'accounts/token-auth/', {
+					headers: { 'Authorization': 'Token ' + token }
+				})
+				.then(res => {
+					if (!res.ok) throw new Error("Token inválido");
+					return res.json()
+				})
+				.catch(err => {
+					console.log("Erro ou não é estudante:", err);
+					adminButtons.style.display = 'none';
+				});
+			}
+		</script>
+
 		<script src="javascript/script.js"></script>
 	</body>
 </html>
