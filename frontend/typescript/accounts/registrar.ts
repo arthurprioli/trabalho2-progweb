@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = (document.getElementById('email') as HTMLInputElement).value.trim();
         const password = (document.getElementById('password') as HTMLInputElement).value;
         const password_confirm = (document.getElementById('password_confirm') as HTMLInputElement).value;
+        const role = (document.getElementById('role') as HTMLSelectElement).value;
         const msg = document.getElementById('msg') as HTMLDivElement;
 
         if (password !== password_confirm) {
@@ -22,12 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(backendAddress + 'accounts/register/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password, password_confirm, email })
+            body: JSON.stringify({ username, password, password_confirm, email, role })
         })
         .then(response => {
             if (response.ok) {
                 return response.json().then(data => {
                     localStorage.setItem('token', data.token);
+                    localStorage.setItem('role', data.user.role);
                     window.location.replace('index.html');
                 });
             } else {
