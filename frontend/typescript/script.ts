@@ -15,21 +15,21 @@ function toggleAprendida(id: number, btn: HTMLButtonElement, row: HTMLTableRowEl
 
         // Verifica se o backend retornou exatamente o que esperamos
         if (data.status === 'adicionado') {
-            
+
             // 1. Adiciona a classe (para manter o padrão semântico)
-            row.classList.add('table-success'); 
-            
+            row.classList.add('table-success');
+
             // 2. FORÇA a cor visualmente (sobreescreve o table-striped do Bootstrap)
             // O terceiro parâmetro 'important' é o segredo
-            row.style.setProperty('background-color', '#d4edda', 'important'); 
-            
+            row.style.setProperty('background-color', '#d4edda', 'important');
+
             btn.innerText = "✅";
 
         } else {
             // Remove a classe e a cor forçada
             row.classList.remove('table-success');
-            row.style.removeProperty('background-color'); 
-            
+            row.style.removeProperty('background-color');
+
             btn.innerText = "⬜";
         }
     })
@@ -39,7 +39,7 @@ function toggleAprendida(id: number, btn: HTMLButtonElement, row: HTMLTableRowEl
 
 function exibeListaDePosicoes() {
     const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role'); 
+    const role = localStorage.getItem('role');
 
     // Se não tiver token, redireciona pro login
     if (!token) {
@@ -49,14 +49,14 @@ function exibeListaDePosicoes() {
     }
 
     Promise.all([
-        fetch(backendAddress + "posicoes/lista/", { 
-            headers: { 'Authorization': 'Token ' + token } 
+        fetch(backendAddress + "posicoes/lista/", {
+            headers: { 'Authorization': 'Token ' + token }
         }).then(r => {
-            if (r.status === 401) throw new Error("401"); 
+            if (r.status === 401) throw new Error("401");
             return r.json();
         }),
-        fetch(backendAddress + "accounts/aprendidas/", { 
-            headers: { 'Authorization': 'Token ' + token } 
+        fetch(backendAddress + "accounts/aprendidas/", {
+            headers: { 'Authorization': 'Token ' + token }
         }).then(r => r.json())
     ])
     .then(([posicoes, idsAprendidos]) => {
@@ -71,12 +71,12 @@ function exibeListaDePosicoes() {
             const foiAprendida = aprendidosSafe.includes(posicao.id);
             if (foiAprendida) {
                 tr.classList.add('table-success'); // Classe Bootstrap para verde
-                tr.style.backgroundColor = '#d4edda'; 
+                tr.style.backgroundColor = '#d4edda';
             }
 
             let tdCheck = document.createElement('td');
             let btnCheck = document.createElement('button');
-            btnCheck.className = "btn btn-sm btn-light border"; 
+            btnCheck.className = "btn btn-sm btn-light border";
             btnCheck.innerText = foiAprendida ? "✅" : "⬜";
             btnCheck.onclick = (e) => {
                 e.preventDefault();
@@ -98,7 +98,7 @@ function exibeListaDePosicoes() {
 
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td') as HTMLTableCellElement;
-                
+
                 // Lógica: Se for Admin E for o campo Nome, cria Link. Senão, Texto normal.
                 if (role === 'admin' && campos[i] === 'nome_pt') {
                     let href = document.createElement('a') as HTMLAnchorElement;
@@ -158,10 +158,11 @@ let apagaPosicoes = (evento: Event) => {
 onload = function () {
 
     const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
 
     const btnInserir = document.getElementById("insere") as HTMLButtonElement;
     const btnRemover = document.getElementById("remove") as HTMLButtonElement;
-
+    
     // Se for estudante → esconde botões
     if (role !== "admin") {
         btnInserir.style.display = "none";

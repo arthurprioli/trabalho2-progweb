@@ -141,6 +141,7 @@ let apagaPosicoes = (evento) => {
 };
 onload = function () {
     const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
     const btnInserir = document.getElementById("insere");
     const btnRemover = document.getElementById("remove");
     // Se for estudante → esconde botões
